@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Recado } from './entities/recado.entities';
 
@@ -35,12 +36,12 @@ export class RecadosService {
   // criar um novo recado
   create(body: any) {
     this.lasId++;
-    // const { texto, de, para } = body;
+    const { texto, de, para } = body;
     const newRecado: Recado = {
       id: this.lasId,
-      texto: body.texto,
-      de: body.de,
-      para: body.para,
+      texto,
+      de,
+      para,
       lido: false,
       data: new Date(),
     };
