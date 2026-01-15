@@ -1,6 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Recado } from './entities/recado.entities';
+import { CreateRecadoDto } from './DTO/create-recado.dto';
+import { UpdateRecadoDto } from './DTO/update-recado.dto';
+import { FindRecadoIdDto } from './DTO/find-recado-id.dto';
 
 @Injectable()
 export class RecadosService {
@@ -27,30 +29,30 @@ export class RecadosService {
   }
 
   // encontrar um recado pelo id
-  findOne(id: string) {
+  findOne(id: FindRecadoIdDto | number) {
     const recado = this.recados.find(recados => recados.id === +id);
     if (recado) return recado;
     return this.throwNotFoundError();
   }
 
   // criar um novo recado
-  create(body: any) {
+  create(createRecadDto: CreateRecadoDto) {
     this.lasId++;
-    const { texto, de, para } = body;
+    const id = this.lasId;
+
     const newRecado: Recado = {
-      id: this.lasId,
-      texto,
-      de,
-      para,
+      id,
+      ...createRecadDto,
       lido: false,
       data: new Date(),
     };
+
     this.recados.push(newRecado);
     return newRecado;
   }
 
   // atualizar um recado existente
-  update(id: string, body: Record<string, any>) {
+  update(id: string, updateRecadoDTO: UpdateRecadoDto) {
     const recadoExistenteIndex = this.recados.findIndex(
       recado => recado.id === +id,
     );
@@ -63,7 +65,7 @@ export class RecadosService {
 
     this.recados[recadoExistenteIndex] = {
       ...recadoExistente,
-      ...body,
+      ...updateRecadoDTO,
     };
 
     return this.recados[recadoExistenteIndex];
