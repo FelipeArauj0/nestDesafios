@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -38,8 +39,8 @@ export class messagesController {
 
   // encontrar um recado recado
   @Get(':id')
-  findOne(@Param() params: FindRecadoIdDto) {
-    return this.recadosService.findOne(params.id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.recadosService.findOne(id);
   }
 
   // criar um recado
@@ -50,13 +51,16 @@ export class messagesController {
 
   // atualizar um recado
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRecadoDTO: UpdateRecadoDto) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateRecadoDTO: UpdateRecadoDto,
+  ) {
     return this.recadosService.update(id, updateRecadoDTO);
   }
 
   // deletar um recado
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', ParseIntPipe) id: number) {
     return this.recadosService.remove(id);
   }
 }

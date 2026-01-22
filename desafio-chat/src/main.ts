@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import { AppModule } from './app.module';
+import { AppModule } from './app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,7 +9,7 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true, // remove campos extras
       forbidNonWhitelisted: true, // erro se mandar campo que não existe
-      transform: true,
+      transform: false, // tenta transformar os tipos de dados params e DTOs
     }),
   );
 
