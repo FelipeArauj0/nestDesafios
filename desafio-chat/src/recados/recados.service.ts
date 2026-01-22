@@ -107,10 +107,9 @@ export class RecadosService {
       this.throwNotFoundError();
     }
 
-    const recado = recadoExistente;
     const recadoDeleteResult = await this.recadoRepository.delete(id);
     // this.recados.splice(recadoExistenteIndex, 1);
-    return { message: `Recado com id ${id} deletado com sucesso.`, ...recado };
+    return { message: `Recado com id ${id} deletado com sucesso.`, ...recadoExistente };
   }
 
   hello() {

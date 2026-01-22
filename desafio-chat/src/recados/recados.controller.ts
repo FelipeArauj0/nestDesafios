@@ -14,7 +14,6 @@ import {
 import { RecadosService } from './recados.service';
 import { CreateRecadoDto } from './DTO/create-recado.dto';
 import { UpdateRecadoDto } from './DTO/update-recado.dto';
-import { FindRecadoIdDto } from './DTO/find-recado-id.dto';
 
 @Controller('messages')
 export class messagesController {
