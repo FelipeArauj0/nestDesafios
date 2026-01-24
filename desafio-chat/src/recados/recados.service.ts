@@ -11,7 +11,7 @@ export class RecadosService {
     @InjectRepository(Recado)
     private readonly recadoRepository: Repository<Recado>,
   ) {}
- 
+
   // Método para lançar erro de recado não encontrado
   throwNotFoundError() {
     throw new NotFoundException(`Recado não encontrado.`);
@@ -48,7 +48,7 @@ export class RecadosService {
     // }
     if (recado) {
       return recado;
-    } 
+    }
     return this.throwNotFoundError();
   }
 
@@ -78,7 +78,7 @@ export class RecadosService {
     const partialUpdateRecadoDTO = {
       lido: updateRecadoDTO?.lido,
       texto: updateRecadoDTO?.texto,
-    }
+    };
     const recadoExistente = await this.recadoRepository.preload({
       id,
       ...partialUpdateRecadoDTO,
@@ -88,7 +88,6 @@ export class RecadosService {
       return await this.recadoRepository.save(recado);
     }
     return this.throwNotFoundError();
-
   }
 
   // deletar um recado
@@ -107,9 +106,12 @@ export class RecadosService {
       this.throwNotFoundError();
     }
 
-    const recadoDeleteResult = await this.recadoRepository.delete(id);
+    await this.recadoRepository.delete(id);
     // this.recados.splice(recadoExistenteIndex, 1);
-    return { message: `Recado com id ${id} deletado com sucesso.`, ...recadoExistente };
+    return {
+      message: `Recado com id ${id} deletado com sucesso.`,
+      ...recadoExistente,
+    };
   }
 
   hello() {
